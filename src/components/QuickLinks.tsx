@@ -1,20 +1,23 @@
+'use client';
+
+import Link from "next/link";
+
 export const QuickLinks = () => {
-    const links = [
-      "Search Hospital",
-      "About Us",
-      "Ask AI",
-      "Check booking status",
-      "Contact Us",
-    ];
-  
-    return (
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-        {links.map((text, index) => (
-          <div key={index} className="text-white text-lg hover:underline cursor-pointer">
-            &gt; {text}
-          </div>
-        ))}
-      </div>
-    );
-  };
-  
+  const links = [
+    { text: "Search Hospital", href: "/search-hospital" },
+    { text: "About Us", href: "/about" },
+    { text: "Ask AI", href: "/ask-ai" },
+    { text: "Check Booking Status", href: "/check-booking-status" },
+    { text: "Contact Us", href: "/contact-us" },
+  ];
+
+  return (
+    <nav className="flex flex-wrap gap-6 text-lg text-white mb-6 justify-center">
+      {links.map((link, index) => (
+        <Link key={index} href={link.href} className="hover:underline">
+          {link.text}
+        </Link>
+      ))}
+    </nav>
+  );
+};
