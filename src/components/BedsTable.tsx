@@ -9,14 +9,30 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useRouter, useParams } from 'next/navigation';
 
-export const BedsTable = () => {
-  const bedsData = [
-    { id: 1, ward: "Cardiology", occupiedBeds: 15, availableBeds: 2, costPerNight: "15K" },
-    { id: 2, ward: "ENT", occupiedBeds: 5, availableBeds: 15, costPerNight: "5k" },
-    { id: 3, ward: "Nephrology", occupiedBeds: 10, availableBeds: 1, costPerNight: "7.5k" },
-    { id: 4, ward: "ICU", occupiedBeds: 4, availableBeds: 4, costPerNight: "40k" },
-  ];
+// Define the type for a Bed Row
+type Bed = {
+  id: number;
+  ward: string;
+  occupiedBeds: number;
+  availableBeds: number;
+  costPerNight: string;
+};
+
+// Props type for BedsTable
+interface BedsTableProps {
+  bedsData: Bed[];
+}
+
+export const BedsTable = ({ bedsData }: BedsTableProps) => {
+  const router = useRouter();
+  const params = useParams();
+  const hospitalId = params.hospitalId as string; // dynamically from URL
+
+  const handleSelect = (row: Bed) => {
+    router.push(`/hospital/${hospitalId}/book?ward=${encodeURIComponent(row.ward)}&cost=${row.costPerNight}`);
+  };
 
   return (
     <section className="mt-12">
@@ -40,9 +56,12 @@ export const BedsTable = () => {
                 <TableCell>{row.ward}</TableCell>
                 <TableCell>{row.occupiedBeds}</TableCell>
                 <TableCell>{row.availableBeds}</TableCell>
-                <TableCell>{row.costPerNight}</TableCell>
+                <TableCell>{row.costPerNight} PKR</TableCell>
                 <TableCell>
-                  <Button className="bg-[#477e40] text-white px-4 py-1 rounded">
+                  <Button
+                    onClick={() => handleSelect(row)}
+                    className="bg-[#477e40] hover:bg-[#356530] text-white px-4 py-1 rounded transition"
+                  >
                     Select
                   </Button>
                 </TableCell>
