@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useParams } from 'next/navigation'; // ✅ Correct for App Router
 import { HospitalInfo } from "@/components/HospitalInfo";
 import { HospitalBanner } from "@/components/HospitalBanner";
 import { BedsTable } from "@/components/BedsTable";
@@ -20,13 +20,30 @@ const bedsData = [
   { id: 4, ward: "ICU", occupiedBeds: 4, availableBeds: 4, costPerNight: "40000" },
 ];
 
-export default function HospitalPage() {
-  const router = useRouter();
-  const { id } = router.query; // This is where the hospital ID from the URL will be
+const HospitalPage = () => {
+  const params = useParams();
+  const id = params?.id as string;
 
   const [hospital, setHospital] = useState<Hospital | null>(null);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (id) {
+      const fetchHospitalData = async () => {
+        try {
+          const response = await fetch(`/api/hospital/${id}`);
+          const data = await response.json();
+          setHospital(data);
+        } catch (error) {
+          console.error('Error fetching hospital data:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchHospitalData();
+    }
+  }, [id]);
 
   if (loading) {
     return (
@@ -65,15 +82,16 @@ export default function HospitalPage() {
       className="min-h-screen bg-cover bg-center"
       style={{ backgroundImage: "url('/website-background.png')" }}
     >
-      <div className="bg-white/80 backdrop-blur-sm px-4 py-8 sm:px-8 md:px-16 lg:px-24 max-w-6xl mx-auto">
+      <div className="bg-transparent px-4 py-8 sm:px-8 md:px-16 lg:px-24 max-w-6xl mx-auto">
         <HospitalInfo name={hospital.name} city={hospital.city} imageUrl={hospital.imageUrl} />
         <HospitalBanner />
         <Map />
         <div className="my-12">
-          <h2 className="text-2xl font-semibold mb-4">Ward Availability</h2>
           <BedsTable bedsData={bedsData} />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default HospitalPage;
