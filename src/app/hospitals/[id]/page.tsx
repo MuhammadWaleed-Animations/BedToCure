@@ -84,7 +84,6 @@ const HospitalPage = () => {
     >
       <div className="bg-transparent px-4 py-8 sm:px-8 md:px-16 lg:px-24 max-w-6xl mx-auto">
         <HospitalInfo name={hospital.name} city={hospital.city} imageUrl={hospital.imageUrl} />
-        <HospitalBanner />
         <Map />
         <div className="my-12">
           <BedsTable bedsData={bedsData} />
