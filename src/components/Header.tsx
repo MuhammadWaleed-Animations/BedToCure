@@ -17,7 +17,7 @@ export const Header = () => {
         </div>
         <nav className="flex gap-6 text-lg text-black">
           <a href="/home" className="hover:underline">Home</a>
-          <a href="/book" className="hover:underline">Book now</a>
+          <a href="/hospitals" className="hover:underline">Book now</a>
           <a href="/about" className="hover:underline">About Us</a>
         </nav>
       </div>

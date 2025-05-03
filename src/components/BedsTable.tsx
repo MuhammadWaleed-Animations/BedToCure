@@ -34,7 +34,7 @@ export const BedsTable = ({bedsData , hospitalId,hospitalName,address}: BedsTabl
   //const hospitalId = params.hospitalId as string; // dynamically from URL
 
   const handleSelect = (row: Bed) => {
-    router.push(`/hospital/${hospitalId}/book?ward=${encodeURIComponent(row.ward)}&cost=${row.costPerNight}&name=${encodeURIComponent(hospitalName)}&address=${encodeURIComponent(address)}`);
+    router.push(`/hospital/${hospitalId}/book?ward=${encodeURIComponent(row.ward)}&cost=${row.costPerNight}&name=${encodeURIComponent(hospitalName)}&address=${encodeURIComponent(address)}&hospitalId=${hospitalId}&bedId=${row.id}&bedCount=${row.availableBeds}`);
   };
 
   return (

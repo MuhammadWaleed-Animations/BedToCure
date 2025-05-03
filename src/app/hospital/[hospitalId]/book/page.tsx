@@ -10,6 +10,9 @@ export default function BookBedPage() {
   const department = searchParams.get('ward') || 'Department';
   const costPerNight = searchParams.get('cost') || '0';
   const bookingFee = searchParams.get('bookingFee') || '1000';
+  const hospitalId = searchParams.get('hospitalId') || '0';
+  const bedId = searchParams.get('bedId') || '0';
+  const bedCount = searchParams.get('bedCount') || '0';
 
   const router = useRouter();
 
@@ -33,30 +36,52 @@ export default function BookBedPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/preorder', {
-        method: 'POST',
+      if (parseInt(bedCount) <= 0) {
+        setError('No beds available in this ward.');
+        return;
+      }
+    
+      // Decrement the bed count first
+      const updateRes = await fetch(`/api/beddetails/${hospitalId}`, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          cnic,
-          name,
-          condition,
-          hospitalName,
-          address,
-          department,
-          costPerNight,
+          wardName: department,
+          delta: -1, // Decrease by 1
         }),
       });
-
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || 'Booking failed');
+    
+      if (!updateRes.ok) {
+        const errData = await updateRes.json();
+        throw new Error(errData.message || 'Failed to update bed count');
       }
-
+    
+      // // Proceed with booking
+      // const bookingRes = await fetch('/api/preorder', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     cnic,
+      //     name,
+      //     condition,
+      //     hospitalName,
+      //     address,
+      //     department,
+      //     costPerNight,
+      //   }),
+      // });
+    
+      // const bookingData = await bookingRes.json();
+      // if (!bookingRes.ok) {
+      //   throw new Error(bookingData.error || 'Booking failed');
+      // }
+    
       alert('Booking successful! Please complete payment.');
       router.push('/home');
     } catch (err: any) {
       setError(err.message);
-    } finally {
+    }
+     finally {
       setLoading(false);
     }
   };
