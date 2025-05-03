@@ -7,9 +7,9 @@ export default function BookBedPage() {
   const searchParams = useSearchParams();
   const hospitalName = searchParams.get('name') || 'Hospital';
   const address = searchParams.get('address') || 'Address';
-  const department = searchParams.get('department') || 'Department';
+  const department = searchParams.get('ward') || 'Department';
   const costPerNight = searchParams.get('cost') || '0';
-  const bookingFee = searchParams.get('bookingFee') || '0';
+  const bookingFee = searchParams.get('bookingFee') || '1000';
 
   const router = useRouter();
 
@@ -126,5 +126,3 @@ export default function BookBedPage() {
     </div>
   );
 }
-
-//router.push(`/hospital/${hospitalId}/book?name=${name}&address=${address}&department=${department}&cost=${costPerNight}&bookingFee=${bookingFee}`);

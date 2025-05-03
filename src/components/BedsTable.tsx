@@ -13,7 +13,7 @@ import { useRouter, useParams } from 'next/navigation';
 
 // Define the type for a Bed Row
 type Bed = {
-  id: number;
+  id: string;
   ward: string;
   occupiedBeds: number;
   availableBeds: number;
@@ -23,15 +23,18 @@ type Bed = {
 // Props type for BedsTable
 interface BedsTableProps {
   bedsData: Bed[];
+  hospitalId: string; // Accept hospitalId as a prop
+  hospitalName: string; // Accept hospitalName as a prop
+  address: string; // Accept address as a prop
 }
 
-export const BedsTable = ({ bedsData }: BedsTableProps) => {
+export const BedsTable = ({bedsData , hospitalId,hospitalName,address}: BedsTableProps) => {
   const router = useRouter();
   const params = useParams();
-  const hospitalId = params.hospitalId as string; // dynamically from URL
+  //const hospitalId = params.hospitalId as string; // dynamically from URL
 
   const handleSelect = (row: Bed) => {
-    router.push(`/hospital/${hospitalId}/book?ward=${encodeURIComponent(row.ward)}&cost=${row.costPerNight}`);
+    router.push(`/hospital/${hospitalId}/book?ward=${encodeURIComponent(row.ward)}&cost=${row.costPerNight}&name=${encodeURIComponent(hospitalName)}&address=${encodeURIComponent(address)}`);
   };
 
   return (
@@ -41,7 +44,7 @@ export const BedsTable = ({ bedsData }: BedsTableProps) => {
         <Table className="min-w-[800px] mx-auto bg-white rounded-lg overflow-hidden shadow">
           <TableHeader>
             <TableRow>
-              <TableHead>#</TableHead>
+              {/* <TableHead>#</TableHead> */}
               <TableHead>Wards</TableHead>
               <TableHead>Occupied Beds</TableHead>
               <TableHead>Available Beds</TableHead>
@@ -52,7 +55,7 @@ export const BedsTable = ({ bedsData }: BedsTableProps) => {
           <TableBody>
             {bedsData.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.id}</TableCell>
+                {/* <TableCell>{row.id}</TableCell> */}
                 <TableCell>{row.ward}</TableCell>
                 <TableCell>{row.occupiedBeds}</TableCell>
                 <TableCell>{row.availableBeds}</TableCell>

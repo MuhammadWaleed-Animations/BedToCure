@@ -3,39 +3,57 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation'; // ✅ Correct for App Router
 import { HospitalInfo } from "@/components/HospitalInfo";
-import { HospitalBanner } from "@/components/HospitalBanner";
 import { BedsTable } from "@/components/BedsTable";
 import { Map } from "@/components/Map";
 
 type Hospital = {
+  _id: string;
   name: string;
   city: string;
   imageUrl: string;
 };
 
-const bedsData = [
-  { id: 1, ward: "Cardiology", occupiedBeds: 15, availableBeds: 2, costPerNight: "15000" },
-  { id: 2, ward: "ENT", occupiedBeds: 5, availableBeds: 15, costPerNight: "5000" },
-  { id: 3, ward: "Nephrology", occupiedBeds: 10, availableBeds: 1, costPerNight: "7500" },
-  { id: 4, ward: "ICU", occupiedBeds: 4, availableBeds: 4, costPerNight: "40000" },
-];
+type Ward = {
+  _id: string;
+  name: string;
+  occupiedBeds: number;
+  availableBeds: number;
+  costPerNight: number;
+};
 
 const HospitalPage = () => {
   const params = useParams();
   const id = params?.id as string;
 
   const [hospital, setHospital] = useState<Hospital | null>(null);
+  const [bedsData, setBedsData] = useState< null>(null); // Change state type to Bed[]
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
       const fetchHospitalData = async () => {
         try {
-          const response = await fetch(`/api/hospital/${id}`);
-          const data = await response.json();
-          setHospital(data);
+          // Fetch hospital details
+          const hospitalResponse = await fetch(`/api/hospital/${id}`);
+          const hospitalData = await hospitalResponse.json();
+          setHospital(hospitalData);
+
+          // Fetch bed details for the specific hospital
+          const bedResponse = await fetch(`/api/beddetails/${id}`);
+          const bedData = await bedResponse.json();
+          
+          // Transform ward data into bed data
+          const transformedBedsData = bedData.wards.map((ward: Ward, index: number) => ({
+            id: ward._id, // Use the unique _id as id for the Bed type
+            ward: ward.name,
+            occupiedBeds: ward.occupiedBeds,
+            availableBeds: ward.availableBeds,
+            costPerNight: ward.costPerNight.toString(), // Ensure costPerNight is a string
+          }));
+
+          setBedsData(transformedBedsData); // Update state with the transformed data
         } catch (error) {
-          console.error('Error fetching hospital data:', error);
+          console.error('Error fetching hospital or bed data:', error);
         } finally {
           setLoading(false);
         }
@@ -73,8 +91,8 @@ const HospitalPage = () => {
     );
   }
 
-  if (!hospital) {
-    return <p className="text-center text-gray-700">Hospital not found.</p>;
+  if (!hospital || !bedsData) {
+    return <p className="text-center text-gray-700">Hospital not found or bed details unavailable.</p>;
   }
 
   return (
@@ -86,7 +104,8 @@ const HospitalPage = () => {
         <HospitalInfo name={hospital.name} city={hospital.city} imageUrl={hospital.imageUrl} />
         <Map />
         <div className="my-12">
-          <BedsTable bedsData={bedsData} />
+          {/* Pass hospital id and transformed beds data to the BedsTable component */}
+          <BedsTable hospitalId={id} hospitalName={hospital.name} address={hospital.city} bedsData={bedsData} />
         </div>
       </div>
     </div>

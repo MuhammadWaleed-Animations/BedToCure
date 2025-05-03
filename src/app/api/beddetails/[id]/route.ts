@@ -91,31 +91,61 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     return NextResponse.json({ error: 'Failed to delete bed details' }, { status: 500 });
   }
 }
-
-// PATCH increment available bed count for a specific ward
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
-  try {
-    await dbConnect();
-    const { id } = await params;
-    const { wardName, incrementBy = 1 } = await request.json(); // Default increment by 1 if not specified
-
-    const bedDetails = await BedDetails.findOne({ hospital: new mongoose.Types.ObjectId(id) });
-    if (!bedDetails) {
-      return NextResponse.json({ message: 'Hospital bed details not found' }, { status: 404 });
+// PATCH adjust available bed count for a specific ward
+export async function PATCH(
+    request: NextRequest,
+    { params }: { params: { id: string } }
+  ) {
+    try {
+      await dbConnect();
+      const { id } = await params;
+      const { wardName, delta = 1 } = await request.json(); // Can be positive or negative
+  
+      const bedDetails = await BedDetails.findOne({
+        hospital: new mongoose.Types.ObjectId(id),
+      });
+  
+      if (!bedDetails) {
+        return NextResponse.json(
+          { message: 'Hospital bed details not found' },
+          { status: 404 }
+        );
+      }
+  
+      const ward = bedDetails.wards.find((w: any) => w.name === wardName);
+      if (!ward) {
+        return NextResponse.json(
+          { message: 'Ward not found' },
+          { status: 404 }
+        );
+      }
+  
+      // Prevent negative bed count
+      const newAvailableBeds = ward.availableBeds + delta;
+      if (newAvailableBeds < 0) {
+        return NextResponse.json(
+          { message: 'Available beds cannot be negative' },
+          { status: 400 }
+        );
+      }
+  
+      ward.availableBeds = newAvailableBeds;
+  
+      await bedDetails.save();
+  
+      return NextResponse.json({
+        message: 'Bed count updated',
+        availableBeds: ward.availableBeds,
+      });
+    } catch (error) {
+      console.error(
+        `[PATCH] Error updating bed count for hospital ${params.id}:`,
+        error
+      );
+      return NextResponse.json(
+        { error: 'Failed to update bed count' },
+        { status: 500 }
+      );
     }
-
-    const ward = bedDetails.wards.find((w:any) => w.name === wardName);
-    if (!ward) {
-      return NextResponse.json({ message: 'Ward not found' }, { status: 404 });
-    }
-
-    ward.availableBeds += incrementBy; // Increment available beds
-
-    await bedDetails.save(); // Save the updated bed details
-
-    return NextResponse.json({ message: 'Bed count updated', bedDetails });
-  } catch (error) {
-    console.error(`[PATCH] Error incrementing bed count for hospital ${params.id}:`, error);
-    return NextResponse.json({ error: 'Failed to increment bed count' }, { status: 500 });
   }
-}
+  
