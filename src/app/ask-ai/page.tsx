@@ -5,6 +5,8 @@ import axios from 'axios';
 import { SendHorizonal } from 'lucide-react';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 export default function AskAIPage() {
   const [question, setQuestion] = useState('');
@@ -36,6 +38,8 @@ export default function AskAIPage() {
   };
 
   return (
+    <div>
+    <Header/>
     <div style={{
       minHeight: '100vh',
       display: 'flex',
@@ -159,6 +163,8 @@ export default function AskAIPage() {
           </Button>
         </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 }

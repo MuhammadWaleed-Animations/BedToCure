@@ -3,9 +3,13 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 export default function ContactUsPage() {
   return (
+    <div>
+    <Header/>
     <div
       className="min-h-screen flex flex-col justify-center items-center p-6"
       style={{
@@ -44,6 +48,8 @@ export default function ContactUsPage() {
           </Button>
         </form>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 }

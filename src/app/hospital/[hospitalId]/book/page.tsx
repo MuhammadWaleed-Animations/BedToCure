@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 export default function BookBedPage() {
   const searchParams = useSearchParams();
@@ -87,6 +89,8 @@ export default function BookBedPage() {
   };
 
   return (
+    <div>
+    <Header/>
     <div style={{ background: 'linear-gradient(to right, #A8E063, #56ab2f)', minHeight: '100vh', padding: '2rem' }}>
       <div style={{ maxWidth: '600px', margin: '0 auto', background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 0 10px rgba(0,0,0,0.2)' }}>
         <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '1rem' }}>
@@ -148,6 +152,8 @@ export default function BookBedPage() {
           </button>
         </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 }

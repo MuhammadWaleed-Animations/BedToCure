@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbConnect } from '@/../lib/dbConnect';
+import { dbConnect } from '../../../../../lib/dbConnect';
 import BedDetails from '@/../models/BedDetails.model';
 
 // Type for the Ward and Hospital

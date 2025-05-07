@@ -1,6 +1,6 @@
 // /app/api/hospitals/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { dbConnect } from '@/../lib/dbConnect';
+import { dbConnect } from '../../../../lib/dbConnect';
 import Hospital from '@/../models/Hospital.model';
 
 export async function GET() {

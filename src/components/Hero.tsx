@@ -13,9 +13,11 @@ export const Hero = () => {
         Want a bed in emergency?
       </h1>
 
-      <Button className="bg-[#477e40] hover:bg-[#366630] text-white text-2xl px-10 py-4 rounded-lg mb-8">
-        Book now
-      </Button>
+      <a href="/hospitals" >
+        <Button className="bg-[#477e40] hover:bg-[#366630] text-white text-2xl px-10 py-4 rounded-lg mb-8">
+          Book now
+        </Button>
+      </a>
 
       <BookingStatus />
       <Highlights />

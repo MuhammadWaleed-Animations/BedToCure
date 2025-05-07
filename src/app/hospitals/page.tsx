@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import HospitalCard from '@/components/HospitalCard';
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 type Hospital = {
   _id: string;
@@ -30,6 +32,8 @@ export default function HospitalsPage() {
   }, []);
 
   return (
+    <div>
+    <Header/>
     <div
       className="min-h-screen flex flex-col"
       style={{ backgroundImage: "url('/website-background.png')" }}
@@ -77,6 +81,8 @@ export default function HospitalsPage() {
           </div>
         )}
       </main>
+    </div>
+    <Footer/>
     </div>
   );
 }

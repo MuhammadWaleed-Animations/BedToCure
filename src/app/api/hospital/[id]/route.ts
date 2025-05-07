@@ -1,5 +1,5 @@
 // /app/api/hospitals/[id]/route.ts
-import { dbConnect } from '@/../lib/dbConnect';
+import { dbConnect } from '../../../../../lib/dbConnect';
 import Hospital from '@/../models/Hospital.model';
 import { NextRequest, NextResponse } from 'next/server';
 import { Document, HydratedDocument } from 'mongoose';

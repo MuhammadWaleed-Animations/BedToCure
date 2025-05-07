@@ -5,8 +5,12 @@ import { Footer } from "../../components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col bg-white">
-      <Hero />
-    </main>
+    <div>
+      <Header />
+        <main className="min-h-screen flex flex-col bg-white">
+          <Hero />
+        </main>
+      <Footer />
+    </div>
   );
 }

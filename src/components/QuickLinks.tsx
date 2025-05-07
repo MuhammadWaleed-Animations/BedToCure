@@ -7,7 +7,7 @@ export const QuickLinks = () => {
     { text: "Search Hospital", href: "/search-hospital" },
     { text: "About Us", href: "/about" },
     { text: "Ask AI", href: "/ask-ai" },
-    { text: "Check Booking Status", href: "/check-booking-status" },
+    { text: "Check Booking Status", href: "/booking-status" },
     { text: "Contact Us", href: "/contact-us" },
   ];
 

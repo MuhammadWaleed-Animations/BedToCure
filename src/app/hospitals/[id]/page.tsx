@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation'; // ✅ Correct for App Router
 import { HospitalInfo } from "@/components/HospitalInfo";
 import { BedsTable } from "@/components/BedsTable";
 import { Map } from "@/components/Map";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 type Hospital = {
   _id: string;
@@ -65,6 +67,8 @@ const HospitalPage = () => {
 
   if (loading) {
     return (
+      <div>
+      <Header/>
       <div className="text-center text-blue-500">
         <svg
           className="animate-spin h-6 w-6 mx-auto mb-2 text-blue-500"
@@ -88,14 +92,23 @@ const HospitalPage = () => {
         </svg>
         Loading hospital information...
       </div>
+      <Footer/>
+      </div>
     );
   }
 
   if (!hospital || !bedsData) {
-    return <p className="text-center text-gray-700">Hospital not found or bed details unavailable.</p>;
+    return (
+    <div>
+      <Header/>
+        <p className="text-center text-gray-700">Hospital not found or bed details unavailable.</p>
+      <Footer/>
+    </div>);
   }
 
   return (
+    <div>
+    <Header/>
     <div
       className="min-h-screen bg-cover bg-center"
       style={{ backgroundImage: "url('/website-background.png')" }}
@@ -108,6 +121,8 @@ const HospitalPage = () => {
           <BedsTable hospitalId={id} hospitalName={hospital.name} address={hospital.city} bedsData={bedsData} />
         </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 };

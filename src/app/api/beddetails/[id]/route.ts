@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import BedDetails from '@/../models/BedDetails.model'; // Adjust the import path if necessary
-import { dbConnect } from '@/../lib/dbConnect';
+import { dbConnect } from '../../../../../lib/dbConnect';
 
 // GET bed details by hospital ID
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {

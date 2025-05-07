@@ -6,6 +6,8 @@ import { HospitalInfo } from "@/components/HospitalInfo";
 import { HospitalBanner } from "@/components/HospitalBanner";
 import { BedsTable } from "@/components/BedsTable";
 import { Map } from "@/components/Map";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 type Hospital = {
   name: string;
@@ -30,6 +32,8 @@ export default function HospitalPage() {
 
   if (loading) {
     return (
+      <div>
+      <Header/>
       <div className="text-center text-blue-500">
         <svg
           className="animate-spin h-6 w-6 mx-auto mb-2 text-blue-500"
@@ -53,14 +57,23 @@ export default function HospitalPage() {
         </svg>
         Loading hospital information...
       </div>
+      <Footer/>
+    </div>
     );
   }
 
   if (!hospital) {
-    return <p className="text-center text-gray-700">Hospital not found.</p>;
+    return (
+    <div>
+      <Header/>
+        <p className="text-center text-gray-700">Hospital not found.</p>
+      <Footer/>
+    </div>)
   }
 
   return (
+    <div>
+    <Header/>
     <div
       className="min-h-screen bg-cover bg-center"
       style={{ backgroundImage: "url('/website-background.png')" }}
@@ -74,6 +87,8 @@ export default function HospitalPage() {
           <BedsTable bedsData={bedsData} />
         </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 }

@@ -1,10 +1,14 @@
 'use client';
 
-import Image from "next/image";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function AboutUsPage() {
   return (
+    <div>
+    <Header/>
     <div
       className="min-h-screen flex flex-col justify-center items-center p-6"
       style={{
@@ -13,6 +17,7 @@ export default function AboutUsPage() {
         backgroundPosition: "center",
       }}
     >
+
       <div className="bg-white/90 max-w-2xl w-full rounded-xl shadow-lg p-8">
         <h1 className="text-4xl text-[#477e40] font-bold text-center mb-6">About BedToCure</h1>
         <p className="text-center text-gray-700 mb-8">
@@ -65,11 +70,15 @@ export default function AboutUsPage() {
         </div>
 
         <div className="text-center mt-8">
-          <Button className="bg-[#477e40] hover:bg-[#355c31] transition text-white">
-            Learn More About Our System
-          </Button>
+          <Link href={"/contact-us"} >
+            <Button className="bg-[#477e40] hover:bg-[#355c31] transition text-white">
+              Learn More About Our System
+            </Button>
+          </Link>
         </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 }
