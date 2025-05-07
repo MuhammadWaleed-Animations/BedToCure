@@ -2,7 +2,11 @@ import React from 'react';
 
 export default function AdminLogin() {
   return (
-    <div className="min-h-screen bg-[#b8d8d8] flex items-center justify-center">
+    <div className="min-h-screen bg-[#b8d8d8] flex items-center justify-center" style={{
+      backgroundImage: "url('/website-background.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}>
       <div className="w-full max-w-2xl p-8">
         <h1 className="text-2xl font-bold text-green-800">BedToCure</h1>
         <hr className="border-t-2 border-black mt-2 mb-6" />

@@ -10,7 +10,12 @@ export default function Departments() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#b8d8d8] p-8">
+    <div className="min-h-screen bg-[#b8d8d8] p-8" 
+    style={{
+      backgroundImage: "url('/website-background.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}>
       {/* Header */}
       <div className="flex justify-between items-center border-b-2 border-black pb-4">
         <h1 className="text-2xl font-bold text-green-800">BedToCure</h1>

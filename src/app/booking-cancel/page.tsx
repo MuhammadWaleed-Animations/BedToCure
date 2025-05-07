@@ -16,7 +16,12 @@ export default function BookingCancellation() {
   };
 
   return (
-    <div className="min-h-screen px-6 pt-16 bg-[#b5d0ce] bg-[radial-gradient(circle,rgba(240,255,255,0.5)_1%,transparent_1%)_0_0,radial-gradient(circle,rgba(240,255,255,0.5)_1%,transparent_1%)_5px_5px] bg-[length:10px_10px]">
+    <div className="min-h-screen px-6 pt-16 bg-[#b5d0ce] bg-[radial-gradient(circle,rgba(240,255,255,0.5)_1%,transparent_1%)_0_0,radial-gradient(circle,rgba(240,255,255,0.5)_1%,transparent_1%)_5px_5px] bg-[length:10px_10px]"
+    style={{
+      backgroundImage: "url('/website-background.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}>
       
       {/* Header */}
       <header className="w-full flex justify-between items-center px-6 border-b border-black">
