@@ -111,27 +111,27 @@ export default function SuperAdminUI() {
 
   return (
     <div
-      className="min-h-screen bg-[#b8d8d8] flex flex-col items-center justify-start py-10 px-4"
+      className="min-h-screen bg-[#f0f4f7] flex flex-col items-center justify-start py-10 px-4"
       style={{
         backgroundImage: "url('/website-background.png')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      <div className="bg-white bg-opacity-80 p-8 rounded shadow-lg max-w-4xl w-full space-y-10">
-        <h1 className="text-3xl font-extrabold text-green-900 text-center">Super Admin Panel</h1>
+      <div className="bg-white bg-opacity-90 p-10 rounded-xl shadow-lg max-w-5xl w-full space-y-8">
+        <h1 className="text-4xl font-extrabold text-green-900 text-center">Super Admin Panel</h1>
         {message && <p className="text-center font-semibold text-red-600">{message}</p>}
 
         {/* Hospital Creation */}
-        <form onSubmit={handleHospitalCreate}>
-          <h2 className="text-xl font-bold text-black mb-2">Add New Hospital</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleHospitalCreate} className="space-y-6">
+          <h2 className="text-2xl font-semibold text-black mb-4">Add New Hospital</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <input
               type="text"
               placeholder="Hospital Name"
               value={hospitalName}
               onChange={(e) => setHospitalName(e.target.value)}
-              className="px-4 py-2 border rounded bg-white text-black"
+              className="px-4 py-3 border rounded-md bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
             <input
@@ -139,7 +139,7 @@ export default function SuperAdminUI() {
               placeholder="City"
               value={hospitalCity}
               onChange={(e) => setHospitalCity(e.target.value)}
-              className="px-4 py-2 border rounded bg-white text-black"
+              className="px-4 py-3 border rounded-md bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
             <input
@@ -147,7 +147,7 @@ export default function SuperAdminUI() {
               placeholder="Google Maps Location URL"
               value={hospitalLocation}
               onChange={(e) => setHospitalLocation(e.target.value)}
-              className="px-4 py-2 border rounded bg-white text-black col-span-full"
+              className="px-4 py-3 border rounded-md bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 col-span-full"
               required
             />
             <input
@@ -155,27 +155,27 @@ export default function SuperAdminUI() {
               placeholder="Image URL (optional)"
               value={hospitalImage}
               onChange={(e) => setHospitalImage(e.target.value)}
-              className="px-4 py-2 border rounded bg-white text-black col-span-full"
+              className="px-4 py-3 border rounded-md bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 col-span-full"
             />
           </div>
           <button
             type="submit"
-            className="mt-4 bg-green-800 text-white px-6 py-2 rounded font-semibold hover:bg-green-700"
+            className="mt-4 bg-green-800 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition-all"
           >
             Add Hospital
           </button>
         </form>
 
         {/* Admin Creation */}
-        <form onSubmit={handleAdminCreate}>
-          <h2 className="text-xl font-bold text-black mb-2">Create Admin for Hospital</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleAdminCreate} className="space-y-6">
+          <h2 className="text-2xl font-semibold text-black mb-4">Create Admin for Hospital</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <input
               type="email"
               placeholder="Admin Email"
               value={adminEmail}
               onChange={(e) => setAdminEmail(e.target.value)}
-              className="px-4 py-2 border rounded bg-white text-black"
+              className="px-4 py-3 border rounded-md bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
             <input
@@ -183,13 +183,13 @@ export default function SuperAdminUI() {
               placeholder="Admin Password"
               value={adminPassword}
               onChange={(e) => setAdminPassword(e.target.value)}
-              className="px-4 py-2 border rounded bg-white text-black"
+              className="px-4 py-3 border rounded-md bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
             <select
               value={selectedHospitalId}
               onChange={(e) => setSelectedHospitalId(e.target.value)}
-              className="px-4 py-2 border rounded bg-white text-black col-span-full"
+              className="px-4 py-3 border rounded-md bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 col-span-full"
               required
             >
               <option value="">Select Hospital</option>
@@ -202,7 +202,7 @@ export default function SuperAdminUI() {
           </div>
           <button
             type="submit"
-            className="mt-4 bg-green-800 text-white px-6 py-2 rounded font-semibold hover:bg-green-700"
+            className="mt-4 bg-green-800 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition-all"
           >
             Create Admin
           </button>
@@ -210,24 +210,22 @@ export default function SuperAdminUI() {
 
         {/* Admin List */}
         <div>
-          <h2 className="text-xl font-bold text-black mb-2">All Admins</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full bg-white text-black border border-gray-300 text-sm">
-              <thead>
-                <tr className="bg-green-100">
-                  <th className="border p-2 text-left">Email</th>
-                  <th className="border p-2 text-left">Role</th>
-                  <th className="border p-2 text-left">Hospital</th>
+          <h2 className="text-2xl font-semibold text-black mb-4">All Admins</h2>
+          <div className="overflow-x-auto bg-white rounded-md shadow-sm">
+            <table className="w-full text-black border border-gray-300 text-sm">
+              <thead className="bg-green-100">
+                <tr>
+                  <th className="border p-3 text-left">Email</th>
+                  <th className="border p-3 text-left">Role</th>
+                  <th className="border p-3 text-left">Hospital</th>
                 </tr>
               </thead>
               <tbody>
                 {admins.map((admin) => (
                   <tr key={admin._id}>
-                    <td className="border p-2">{admin.email}</td>
-                    <td className="border p-2">{admin.role}</td>
-                    <td className="border p-2">
-                      {admin.hospitalId?.name || '—'}
-                    </td>
+                    <td className="border p-3">{admin.email}</td>
+                    <td className="border p-3">{admin.role}</td>
+                    <td className="border p-3">{admin.hospitalId?.name || '—'}</td>
                   </tr>
                 ))}
                 {admins.length === 0 && (

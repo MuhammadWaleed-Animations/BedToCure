@@ -4,22 +4,29 @@ import { dbConnect } from '@/../lib/dbConnect';
 import Admin from '@/../models/Admin.model';
 import bcrypt from 'bcrypt';
 
-// Create a new admin
 export async function POST(req: NextRequest) {
   await dbConnect();
-  const body = await req.json();
 
+  const body = await req.json();
   const { email, password, role, hospitalId } = body;
+
   if (!email || !password) {
-    return NextResponse.json({ message: 'Email and password are required' }, { status: 400 });
+    return NextResponse.json(
+      { message: 'Email and password are required' },
+      { status: 400 }
+    );
   }
 
   const existingAdmin = await Admin.findOne({ email });
   if (existingAdmin) {
-    return NextResponse.json({ message: 'Admin already exists' }, { status: 409 });
+    return NextResponse.json(
+      { message: 'Admin already exists' },
+      { status: 409 }
+    );
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
+
   const newAdmin = await Admin.create({
     email,
     passwordHash,
@@ -27,8 +34,18 @@ export async function POST(req: NextRequest) {
     hospitalId: role === 'hospitaladmin' ? hospitalId : undefined,
   });
 
-  return NextResponse.json({ message: 'Admin created', admin: newAdmin }, { status: 201 });
+  // Conditionally populate hospitalId if role is hospitaladmin
+  const populatedAdmin =
+    role === 'hospitaladmin'
+      ? await Admin.findById(newAdmin._id).populate('hospitalId')
+      : newAdmin;
+
+  return NextResponse.json(
+    { message: 'Admin created', admin: populatedAdmin },
+    { status: 201 }
+  );
 }
+
 
 // List all admins
 export async function GET() {
